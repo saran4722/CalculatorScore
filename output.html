@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>លទ្ធផល</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="text-center mt-5 text-primary fw-bold h1">តារាងលទ្ធផល</div>
+
+  <div class="container mt-4 p-4 bg-white shadow rounded" style="max-width:600px;">
+    <div class="row mb-3">
+      <div class="col-6 text-center">
+        <label class="fw-bold">ពិន្ទុសរុប</label>
+        <div id="total" class="h4 text-success"></div>
+      </div>
+      <div class="col-6 text-center">
+        <label class="fw-bold">ធម្យមភាគ</label>
+        <div id="average" class="h4 text-success"></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6 text-center">
+        <label class="fw-bold">និទ្ទេស</label>
+        <div id="grade" class="h4 text-info"></div>
+      </div>
+      <div class="col-6 text-center">
+        <label class="fw-bold">លទ្ធផល</label>
+        <div id="result" class="h4 text-danger"></div>
+      </div>
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="index.html" class="btn btn-dark fw-bold">ត្រឡប់ក្រោយ</a>
+    </div>
+  </div>
+
+  <script>
+    function calculateScore() {
+      let scores = JSON.parse(localStorage.getItem('scores'));
+      if (!scores) return;
+
+      let math = Number(scores.math);
+      let khmer = Number(scores.khmer);
+      let physics = Number(scores.physics);
+      let chemistry = Number(scores.chemistry);
+      let biology = Number(scores.biology);
+      let english = Number(scores.english);
+
+      let total = math + khmer + physics + chemistry + biology + english;
+      let average = total / 6;
+
+      // Grade conditions
+      let grade = '';
+      if (average >= 472) grade = 'A+';
+      else if (average > 427 && average <= 471) grade = 'A';
+      else if (average > 380 && average <= 426) grade = 'B';
+      else if (average > 332 && average <= 379) grade = 'C';
+      else if (average > 285 && average <= 331) grade = 'D';
+      else if (average > 227 && average <= 284) grade = 'E';
+      else grade = 'F';
+
+      let result = (average >= 50) ? 'ជាប់ ✅' : 'ធ្លាក់ ❌';
+
+      // Show results
+      document.getElementById('total').textContent = total;
+      document.getElementById('average').textContent = average.toFixed(2);
+      document.getElementById('grade').textContent = grade;
+      document.getElementById('result').textContent = result;
+    }
+
+    window.onload = calculateScore;
+  </script>
+</body>
+</html>
